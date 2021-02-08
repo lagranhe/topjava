@@ -18,7 +18,8 @@
 
         <!-- Logging -->
         <logback.version>1.2.3</logback.version>
-        <slf4j.version>1.7.30</slf4j.version>
+        <slf4j.version>1.7.28</slf4j.version>
+        <jsl.version>1.2</jsl.version>
     </properties>
 
     <build>
@@ -47,6 +48,13 @@
         </dependency>
 
         <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>1.5.6</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>${logback.version}</version>
@@ -60,11 +68,13 @@
             <version>4.0.1</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.28</version>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>${jsl.version}</version>
         </dependency>
+
     </dependencies>
 
     <profiles>
