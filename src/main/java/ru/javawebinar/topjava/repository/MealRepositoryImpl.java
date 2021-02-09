@@ -21,12 +21,12 @@ public class MealRepositoryImpl implements MealRepository{
     );
 
     @Override
-    public List<Meal> getMealList() {
+    public List<Meal> getList() {
         return meals;
     }
 
     @Override
-    public Meal getMeal(int id) {
+    public Meal get(int id) {
         for (Meal meal : meals){
             if (meal.getId().get() == id) {
                 return meal;
@@ -36,18 +36,18 @@ public class MealRepositoryImpl implements MealRepository{
     }
 
     @Override
-    public boolean createMeal(Meal meal) {
+    public boolean create(Meal meal) {
         meals.add(new Meal(meal.getDateTime(), meal.getDescription(), meal.getCalories()));
         return true;
     }
 
     @Override
-    public Meal updateMeal(Meal meal) {
+    public Meal update(Meal oldMeal, Meal newMeal) {
         for (Meal mealsFromList : meals){
-            if (meal.getId().get() == meal.getId().get()) {
-                mealsFromList.setCalories(meal.getCalories());
-                mealsFromList.setDateTime(meal.getDateTime());
-                mealsFromList.setDescription(meal.getDescription());
+            if (oldMeal.getId().get() == mealsFromList.getId().get()) {
+                mealsFromList.setCalories(newMeal.getCalories());
+                mealsFromList.setDateTime(newMeal.getDateTime());
+                mealsFromList.setDescription(newMeal.getDescription());
                 return mealsFromList;
             }
         }

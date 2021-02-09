@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"  %>
 
 <html>
@@ -17,6 +17,8 @@
 <body>
 <h3><a href="index.html">Home</a></h3>
 <hr>
+<h1>Meals</h1>
+<a href="/topjava/meals?action=add">Add meal</a>
 <table border="solid black">
     <tr>
         <th><p>Date</p></th>
@@ -36,8 +38,8 @@
             </td>
             <td><p>${meal.description}</p></td>
             <td><p>${meal.calories}</p></td>
-            <td><p></p></td>
-            <td><p></p></td>
+            <td><p><a href="/topjava/meals?action=update&mealId=<c:out value="${meal.id}"/>"> Update </a></p></td>
+            <td><p><a href="/topjava/meals?action=delete&mealId=<c:out value="${meal.id}"/>"> Delete </a></p></td>
         </tr>
     </c:forEach>
 </table>
