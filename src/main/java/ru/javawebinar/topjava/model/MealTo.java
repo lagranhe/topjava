@@ -38,6 +38,10 @@ public class MealTo {
         return excess;
     }
 
+    public AtomicInteger getId() {
+        return id;
+    }
+
     @Override
     public String toString() {
         return "MealTo{" +
