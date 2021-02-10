@@ -18,19 +18,19 @@
 <hr>
 <h1>EditMeal</h1>
 
-<form method="POST" action="${pageContext.request.contextPath}/meals?id=${requestScope.id}">
+<form method="POST" action="${pageContext.request.contextPath}/meals?id=${requestScope.meal.id}">
     <table border-collapse="collapse">
         <tr>
             <th>DateTime:</th>
-            <th><input type="datetime-local" name="dataTime" value="<c:out value="${requestScope.data}"/>"/></th>
+            <th><input type="datetime-local" name="dataTime" value="<c:out value="${requestScope.meal.dateTime}"/>"/></th>
         </tr>
         <tr>
             <th>Description:</th>
-            <th><input type="text" name="description" value="<c:out value="${requestScope.description}"/>"/></th>
+            <th><input type="text" name="description" value="<c:out value="${requestScope.meal.description}"/>"/></th>
         </tr>
         <tr>
             <th>Calories:</th>
-            <th><input type="text" name="calories" value="<c:out value="${requestScope.calories}"/>"/></th>
+            <th><input type="text" name="calories" value="<c:out value="${requestScope.meal.calories}"/>"/></th>
         </tr>
     </table>
     <br>

@@ -42,10 +42,7 @@ public class MealServlet extends HttpServlet {
         } else if (action.equalsIgnoreCase("update")){
             forward = EDIT_MEAL;
             int mealId = Integer.parseInt(request.getParameter("mealId"));
-            request.setAttribute("id", mealId);
-            request.setAttribute("calories", mealRepository.get(mealId).getCalories());
-            request.setAttribute("data", mealRepository.get(mealId).getDateTime());
-            request.setAttribute("description", mealRepository.get(mealId).getDescription());
+            request.setAttribute("meal", mealRepository.get(mealId));
         }
         int maxCalories = 2000;
         final List<MealTo> mealsToList = MealsUtil.filteredByStreams(mealRepository.getList(), LocalTime.MIN, LocalTime.MAX, maxCalories);
