@@ -47,7 +47,7 @@ public class MealServlet extends HttpServlet {
             request.setAttribute("data", mealRepository.get(mealId).getDateTime());
             request.setAttribute("description", mealRepository.get(mealId).getDescription());
         }
-        final int maxCalories = 2000;
+        int maxCalories = 2000;
         final List<MealTo> mealsToList = MealsUtil.filteredByStreams(mealRepository.getList(), LocalTime.MIN, LocalTime.MAX, maxCalories);
         mealsToList.sort(Comparator.comparing(MealTo::getDateTime));
         request.setAttribute("meals", mealsToList);

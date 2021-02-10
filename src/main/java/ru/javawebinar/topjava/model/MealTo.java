@@ -12,9 +12,9 @@ public class MealTo {
 
     private final boolean excess;
 
-    private final AtomicInteger id;
+    private final int id;
 
-    public MealTo(LocalDateTime dateTime, String description, int calories, boolean excess, AtomicInteger id) {
+    public MealTo(LocalDateTime dateTime, String description, int calories, boolean excess, int id) {
         this.dateTime = dateTime;
         this.description = description;
         this.calories = calories;
@@ -38,7 +38,7 @@ public class MealTo {
         return excess;
     }
 
-    public AtomicInteger getId() {
+    public int getId() {
         return id;
     }
 

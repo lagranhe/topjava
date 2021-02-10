@@ -7,8 +7,11 @@ import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class MealRepositoryImpl implements MealRepository{
+
+
 
     public static final List<Meal> meals = new CopyOnWriteArrayList<>(
             Arrays.asList(new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 10, 0), "Завтрак", 500),
@@ -28,7 +31,7 @@ public class MealRepositoryImpl implements MealRepository{
     @Override
     public Meal get(int id) {
         for (Meal meal : meals){
-            if (meal.getId().get() == id) {
+            if (meal.getId() == id) {
                 return meal;
             }
         }
@@ -36,25 +39,24 @@ public class MealRepositoryImpl implements MealRepository{
     }
 
     @Override
-    public boolean create(Meal meal) {
-        return meals.add(new Meal(meal.getDateTime(), meal.getDescription(), meal.getCalories()));
+    public void create(Meal meal) {
+        meals.add(new Meal(meal.getDateTime(), meal.getDescription(), meal.getCalories()));
     }
 
     @Override
-    public Meal update(Meal oldMeal, Meal newMeal) {
+    public void update(Meal oldMeal, Meal newMeal) {
         for (Meal mealsFromList : meals){
-            if (oldMeal.getId().get() == mealsFromList.getId().get()) {
+            if (oldMeal.getId() == mealsFromList.getId()) {
                 mealsFromList.setCalories(newMeal.getCalories());
                 mealsFromList.setDateTime(newMeal.getDateTime());
                 mealsFromList.setDescription(newMeal.getDescription());
-                return mealsFromList;
+                return;
             }
         }
-        return null;
     }
 
     @Override
-    public boolean delete(Meal meal) {
-        return meals.remove(meal);
+    public void delete(Meal meal) {
+        meals.remove(meal);
     }
 }
