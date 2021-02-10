@@ -37,8 +37,7 @@ public class MealRepositoryImpl implements MealRepository{
 
     @Override
     public boolean create(Meal meal) {
-        meals.add(new Meal(meal.getDateTime(), meal.getDescription(), meal.getCalories()));
-        return true;
+        return meals.add(new Meal(meal.getDateTime(), meal.getDescription(), meal.getCalories()));
     }
 
     @Override
@@ -56,11 +55,6 @@ public class MealRepositoryImpl implements MealRepository{
 
     @Override
     public boolean delete(Meal meal) {
-        for (Meal mealsFromList : meals){
-            if (meal.getId().get() == meal.getId().get()) {
-                return meals.remove(mealsFromList);
-            }
-        }
-        return false;
+        return meals.remove(meal);
     }
 }

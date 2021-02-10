@@ -35,7 +35,8 @@ public class MealServlet extends HttpServlet {
         } else if (action.equalsIgnoreCase("delete")){
             int mealId = Integer.parseInt(request.getParameter("mealId"));
             mealRepository.delete(mealRepository.get(mealId));
-            forward = LIST_MEAL;
+            response.sendRedirect("meals");
+            return;
         } else if (action.equalsIgnoreCase("add")){
             forward = EDIT_MEAL;
         } else if (action.equalsIgnoreCase("update")){
@@ -67,6 +68,6 @@ public class MealServlet extends HttpServlet {
             int id = Integer.parseInt(mealId);
             mealRepository.update(mealRepository.get(id), newMeal);
         }
-        response.sendRedirect(getServletContext().getContextPath().concat("/meals"));
+        response.sendRedirect("meals");
     }
 }
