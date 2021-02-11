@@ -34,7 +34,8 @@
         </tr>
     </table>
     <br>
-    <input type="submit" value="Submit"/>
+    <input type="submit" value="Save"/>
+    <input type="button" onclick="window.history.back()" value="Cancel">
 </form>
 </body>
 </html>
