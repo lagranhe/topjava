@@ -17,6 +17,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class InMemoryUserRepository implements UserRepository {
     private static final Logger log = LoggerFactory.getLogger(InMemoryUserRepository.class);
     private final Map<Integer, User> repository = new ConcurrentHashMap<>();
+    public static final int USER_ID = 1;
+    public static final int ADMIN_ID = 2;
 
     @Override
     public boolean delete(int id) {

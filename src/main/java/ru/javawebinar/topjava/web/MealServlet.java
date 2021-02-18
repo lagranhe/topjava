@@ -20,11 +20,14 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
+import static java.lang.Integer.parseInt;
+
 public class MealServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(MealServlet.class);
-    private final int userId = SecurityUtil.authUserId();
     private final ConfigurableApplicationContext appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml");
     private final MealRestController mealRestController = appCtx.getBean(MealRestController.class);
+    private final int authUserId = SecurityUtil.authUserId();
+    private final int authUserCaloriesPerDay = SecurityUtil.authUserCaloriesPerDay();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -34,10 +37,10 @@ public class MealServlet extends HttpServlet {
         Meal meal = new Meal(id.isEmpty() ? null : Integer.valueOf(id),
                 LocalDateTime.parse(request.getParameter("dateTime")),
                 request.getParameter("description"),
-                Integer.parseInt(request.getParameter("calories")));
+                parseInt(request.getParameter("calories")));
 
         log.info(meal.isNew() ? "Create {}" : "Update {}", meal);
-        mealRestController.update(userId, meal);
+        mealRestController.update(authUserId, meal);
         response.sendRedirect("meals");
     }
 
@@ -49,14 +52,14 @@ public class MealServlet extends HttpServlet {
             case "delete":
                 int id = getId(request);
                 log.info("Delete {}", id);
-                mealRestController.delete(userId, id);
+                mealRestController.delete(authUserId, id);
                 response.sendRedirect("meals");
                 break;
             case "create":
             case "update":
                 final Meal meal = "create".equals(action) ?
                         new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1000) :
-                        mealRestController.get(userId, getId(request));
+                        mealRestController.get(authUserId, getId(request));
                 request.setAttribute("meal", meal);
                 request.getRequestDispatcher("/mealForm.jsp").forward(request, response);
                 break;
@@ -64,7 +67,8 @@ public class MealServlet extends HttpServlet {
             default:
                 log.info("getAll");
                 request.setAttribute("meals",
-                        MealsUtil.getTos(mealRestController.getAll(userId), SecurityUtil.authUserCaloriesPerDay()));
+                        MealsUtil.getTos(mealRestController.getAll(authUserId), authUserCaloriesPerDay));
+                request.setAttribute("userId", authUserId);
                 request.getRequestDispatcher("/meals.jsp").forward(request, response);
                 break;
         }
@@ -72,6 +76,6 @@ public class MealServlet extends HttpServlet {
 
     private int getId(HttpServletRequest request) {
         String paramId = Objects.requireNonNull(request.getParameter("id"));
-        return Integer.parseInt(paramId);
+        return parseInt(paramId);
     }
 }

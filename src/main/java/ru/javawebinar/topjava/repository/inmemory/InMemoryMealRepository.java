@@ -19,7 +19,7 @@ public class InMemoryMealRepository implements MealRepository {
     private final AtomicInteger counter = new AtomicInteger(0);
 
     {
-        MealsUtil.meals.forEach(meal -> save(SecurityUtil.authUserId(), meal));
+        MealsUtil.meals.forEach(meal -> save(1, meal));
     }
 
     @Override
@@ -53,7 +53,7 @@ public class InMemoryMealRepository implements MealRepository {
 
     @Override
     public Collection<Meal> getAll(int userId) {
-        return new ArrayList<>(repository.get(userId).values());
+        return (repository.get(userId) == null) ? new ArrayList<>() : new ArrayList<>(repository.get(userId).values());
     }
 }
 
