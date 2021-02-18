@@ -7,6 +7,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.repository.inmemory.InMemoryMealRepository;
+import ru.javawebinar.topjava.util.DateTimeUtil;
 import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.web.meal.MealRestController;
 import ru.javawebinar.topjava.web.user.AdminRestController;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
@@ -61,11 +63,16 @@ public class MealServlet extends HttpServlet {
                 request.setAttribute("meal", meal);
                 request.getRequestDispatcher("/mealForm.jsp").forward(request, response);
                 break;
-            case "all":
+            case ("all"):
             default:
                 log.info("getAll");
                 request.setAttribute("meals",
-                        MealsUtil.getTos(mealRestController.getAll(SecurityUtil.authUserId()), SecurityUtil.authUserCaloriesPerDay()));
+                        MealsUtil.getFilteredTos(
+                                mealRestController.getAll(SecurityUtil.authUserId()),
+                                SecurityUtil.authUserCaloriesPerDay(),
+                                DateTimeUtil.toStartFilterLocalTime(request.getParameter("startData"), request.getParameter("startTime")),
+                                DateTimeUtil.toEndFilterLocalTime(request.getParameter("endData"), request.getParameter("endTime"))
+                                ));
                 request.setAttribute("userId", SecurityUtil.authUserId());
                 request.getRequestDispatcher("/meals.jsp").forward(request, response);
                 break;
