@@ -26,11 +26,11 @@ public class UserServlet extends HttpServlet {
                 request.getRequestDispatcher("/users.jsp").forward(request, response);
                 break;
             case "logUser" :
-                SecurityUtil.authUserId = InMemoryUserRepository.USER_ID;
+                SecurityUtil.setAuthUserId(InMemoryUserRepository.USER_ID);
                 request.getRequestDispatcher("meals?user=1").forward(request, response);
                 break;
             case "logAdmin":
-                SecurityUtil.authUserId = InMemoryUserRepository.ADMIN_ID;
+                SecurityUtil.setAuthUserId(InMemoryUserRepository.ADMIN_ID);
                 request.getRequestDispatcher("meals?user=2").forward(request, response);
         }
     }
