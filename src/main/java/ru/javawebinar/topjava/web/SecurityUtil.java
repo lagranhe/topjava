@@ -6,10 +6,6 @@ public class SecurityUtil {
 
     public static int authUserId;
 
-    public static void setAuthUserId(int authUserId) {
-        SecurityUtil.authUserId = authUserId;
-    }
-
     public static int authUserId() {
         return authUserId;
     }
