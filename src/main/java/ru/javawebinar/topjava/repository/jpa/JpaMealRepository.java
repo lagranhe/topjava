@@ -5,6 +5,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.MealRepository;
+import ru.javawebinar.topjava.util.exception.NotFoundException;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.time.LocalDateTime;
@@ -26,7 +28,11 @@ public class JpaMealRepository implements MealRepository {
             em.persist(meal);
             return meal;
         } else {
-            return em.merge(meal);
+            if (get(meal.id(), userId) != null){
+                return em.merge(meal);
+            } else {
+                throw new NotFoundException("Not found meal " + meal + " for user with id=" + userId);
+            }
         }
     }
 
@@ -41,7 +47,13 @@ public class JpaMealRepository implements MealRepository {
 
     @Override
     public Meal get(int id, int userId) {
-        return em.find(Meal.class, id);
+        Meal meal = em.find(Meal.class, id);
+        if (meal != null && meal.getUser().getId() == userId){
+            return meal;
+        } else {
+            throw new NotFoundException("Not found meal " + meal + " for user with id=" + userId);
+        }
+
     }
 
     @Override
