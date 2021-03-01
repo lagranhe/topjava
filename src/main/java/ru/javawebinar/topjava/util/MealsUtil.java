@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class MealsUtil {
+public class    MealsUtil {
     public static final int DEFAULT_CALORIES_PER_DAY = 2000;
 
     private MealsUtil() {
