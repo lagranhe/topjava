@@ -6,7 +6,6 @@ import javax.validation.constraints.Size;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
-
 @MappedSuperclass
 public abstract class AbstractNamedEntity extends AbstractBaseEntity {
 
